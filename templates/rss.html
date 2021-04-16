@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{publication|upper}} Headlines</title>
+    <link rel="stylesheet"  href="{{url_for('static', filename='main.css')}}">
+</head>
+<body>
+    <h1>Headlines</h1>
+    <form action="">
+        <input type="search" name="publication" id="publication" placeholder="Search" />
+        <input type="submit" value="Search" />
+    </form>
+    {% for article in articles %}
+        <a href = {{article.link}}>{{ article.title}}</a>
+        <i>{{ article.published}}</i>
+        <p>{{ article.summary }}</p>
+        <hr>
+    {% endfor %}  
+</body>
+</html>
