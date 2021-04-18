@@ -4,17 +4,64 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
     <title>Crime Map</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='map.css')}}">
 </head>
 <body>
-    <h1>Crime Map</h1>
-    <form action="/add" method="post">
-        <input type="text" name="userinput" id="userinput">
-        <input type="submit" value="Submit">
-    </form>
-    <a href="/clear">Clear</a>
-    {% for userinput in data %}
-        <p>{{userinput}}</p>
-    {% endfor %}
+    <main>
+        <section>
+            <h1>Crime Map</h1>
+            <form action="/add" method="post">
+                <input type="text" name="userinput" id="userinput">
+                <input type="submit" value="Submit">
+            </form>
+            <a href="/clear">Clear</a>
+            {% for userinput in data %}
+                <p>{{userinput['description']}}</p>
+            {% endfor %}
+        </section>
+        <div>
+            <section id='map-canvas' class='map'>
+    
+            </section>
+            <section id="mouse-position">
+                <form>
+                    <label for="projection">Projection </label>
+                    <select id="projection">
+                        <option value="EPSG:4326">EPSG:4326</option>
+                        <option value="EPSG:3857">EPSG:3857</option>
+                    </select>
+                    <label for="precision">Precision</label>
+                    <input id="precision" type="number" min="0" max="12" value="3"/>
+                </form>
+                <article id="newcrimeform">
+                    <h2>Submit new crime</h2>
+                    <form action="/submitcrime" method="POST">
+                        <label for="category">Category</label>
+                        <select name="category" id="category">
+                            <option value="mugging">Mugging</option>
+                            <option value="breakin">Break-in</option>
+                        </select>
+                        <label for="date">Date</label>
+                        <input name="date" id="date" type="date">
+                        <label for="latitude">Latitude</label>
+                        <input name="latitude" id="latitude"type="text">
+                        <label for="longitude">Longitude</label>
+                        <input name="longitude" id="longitude" type="text">
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" placeholder="A brief but detailed description of the crime"></textarea>
+                        <input type="submit" value="Submit">
+                    </form>
+                </article>
+            </section>
+        </div>
+        
+    </main>
+   
+
+
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <script src="{{url_for('static', filename='map.js')}}"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ class DBHelper:
     
     def get_all_inputs(self):
         with self.connect() as con:
+            con.row_factory = sqlite3.Row
             cursor = con.cursor()
             query = "SELECT description FROM crimes;"
             cursor.execute(query)
