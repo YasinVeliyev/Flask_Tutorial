@@ -8,15 +8,15 @@ class DBHelper:
         with self.connect() as con:
             con.row_factory = sqlite3.Row
             cursor = con.cursor()
-            query = "SELECT description FROM crimes;"
+            query = "SELECT * FROM crimes;"
             cursor.execute(query)
             return cursor.fetchall()
     
-    def add_input(self, data):
+    def add_input(self, *data):
         with self.connect() as con:
-            query = "INSERT INTO crimes (description) VALUES(?)"
+            query = f"INSERT INTO crimes (category, date, latitude, longitude, description,updated_at) VALUES(?,?,?,?,?,?)"
             cursor = con.cursor() 
-            cursor.execute(query,(data,))
+            cursor.execute(query,data)
             con.commit()
             
     

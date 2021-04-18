@@ -1,5 +1,6 @@
 from dbhelper import DBHelper 
 from flask import Flask, render_template, request
+from datetime import datetime
 
 app = Flask(__name__)
 db = DBHelper()
@@ -30,6 +31,15 @@ def clear():
         print(e)
     return home()
 
+@app.route("/submitcrime", methods = ['POST'])
+def submitcrime():
+    category = request.form.get('category')
+    date = request.form.get('date')
+    latitude = float(request.form.get("latitude"))
+    longitude = float(request.form.get("longitude"))
+    description = request.form.get('description')
+    db.add_input(category, date, latitude, longitude, description,datetime.now())
+    return home()
 
 if __name__ == '__main__':
     app.run(debug=True)
